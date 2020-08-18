@@ -1,0 +1,16 @@
+{
+  "name": "bloodthirst",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:RikKierkels/bloodthirst.git",
+  "author": "Rik Kierkels <kierkels.r@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "jest": "^26.4.0",
+    "prettier": "^2.0.5"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}

@@ -17,7 +17,8 @@ const runWave = (canvas) =>
   );
 
 const runGame = async () => {
-  const imageCache = await ImageCache.preload(Object.values(IMAGES));
+  const imageCache = await ImageCache().preload(Object.values(IMAGES));
+
   let canvas = CanvasFactory({ width: 512, height: 480, imageCache });
   canvas = canvas.load(document.body);
   canvas = await runWave(canvas);

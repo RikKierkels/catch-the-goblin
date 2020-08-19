@@ -6,8 +6,8 @@ const runFrame = (frameFunction) => {
 
   const frame = (time) => {
     if (lastTime) {
-      const timeStep = Math.min(time - lastTime, MAX_FRAME_STEP_MS) / TOTAL_MS_IN_SEC;
-      const isRequestingNextFrame = frameFunction(timeStep);
+      const elapsedTime = Math.min(time - lastTime, MAX_FRAME_STEP_MS) / TOTAL_MS_IN_SEC;
+      const isRequestingNextFrame = frameFunction(elapsedTime);
       if (!isRequestingNextFrame) return;
     }
 
@@ -17,3 +17,5 @@ const runFrame = (frameFunction) => {
 
   requestAnimationFrame(frame);
 };
+
+export { runFrame };

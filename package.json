@@ -1,7 +1,7 @@
 {
   "name": "bloodthirst",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "repository": "git@github.com:RikKierkels/bloodthirst.git",
   "author": "Rik Kierkels <kierkels.r@gmail.com>",
   "license": "MIT",

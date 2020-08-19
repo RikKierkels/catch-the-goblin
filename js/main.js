@@ -6,9 +6,7 @@ import trackInput from "./input.js";
 import State from "./state.js";
 import ActorFactory from "./actor.js";
 import { compose } from "./utils/fp.js";
-
-export const GAME_WIDTH_PX = 512;
-export const GAME_HEIGHT_PX = 480;
+import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./world.js";
 
 const runWave = (state, canvas, input) =>
   new Promise((resolve) =>
@@ -34,7 +32,7 @@ const runGame = async () => {
   const hero = ActorFactory.create(ACTOR_TYPES.HERO);
   let state = State.create({ hero });
 
-  let canvas = Canvas({ width: GAME_WIDTH_PX, height: GAME_HEIGHT_PX, imageCache }).load(document.body);
+  let canvas = Canvas({ width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX, imageCache }).load(document.body);
   [state, canvas] = await runWave(state, canvas, input);
 };
 

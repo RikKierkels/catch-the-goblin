@@ -6,6 +6,7 @@ const CanMove = {
     this.x = x;
     this.y = y;
   },
+  isCollidingWith() {},
 };
 
 export default CanMove;

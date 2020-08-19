@@ -1,19 +1,20 @@
 import { INPUT_KEYS } from "./utils/constants.js";
+import { isWithinBoundsEast, isWithinBoundsNorth, isWithinBoundsSouth, isWithinBoundsWest } from "./world.js";
 
 const getNextCoordinates = (x, y, distance, input) => {
-  if (input[INPUT_KEYS.ARROW_UP]) {
+  if (input[INPUT_KEYS.ARROW_UP] && isWithinBoundsNorth(y)) {
     y -= distance;
   }
 
-  if (input[INPUT_KEYS.ARROW_DOWN]) {
+  if (input[INPUT_KEYS.ARROW_DOWN] && isWithinBoundsSouth(y)) {
     y += distance;
   }
 
-  if (input[INPUT_KEYS.ARROW_LEFT]) {
+  if (input[INPUT_KEYS.ARROW_LEFT] && isWithinBoundsWest(x)) {
     x -= distance;
   }
 
-  if (input[INPUT_KEYS.ARROW_RIGHT]) {
+  if (input[INPUT_KEYS.ARROW_RIGHT] && isWithinBoundsEast(x)) {
     x += distance;
   }
 

@@ -26,7 +26,7 @@ const ImageCache = () => {
         if (loadedCount === toLoadCount) resolve(this);
       };
 
-      const loadImage = makeLoadImage(onload);
+      const loadImage = makeLoadImage(onload, onerror);
       sources.forEach(loadImage);
     });
   }

@@ -12,7 +12,6 @@ const ImageCache = () => {
 
   function save(src, image) {
     cache[src] = image;
-    return this;
   }
 
   function preload(sources) {

@@ -1,6 +1,6 @@
-import { INPUT_KEYS } from "./utils/constants.js";
+import { INPUT_KEYS } from "../utils/constants.js";
 import { Location } from "./can-move.js";
-import { WORLD_BOUNDARY_EAST, WORLD_BOUNDARY_NORTH, WORLD_BOUNDARY_SOUTH, WORLD_BOUNDARY_WEST } from "./world.js";
+import { WORLD_BOUNDARY_EAST, WORLD_BOUNDARY_NORTH, WORLD_BOUNDARY_SOUTH, WORLD_BOUNDARY_WEST } from "../core/world.js";
 
 const getTravelledDistance = (distance, input) => {
   let location = Location();

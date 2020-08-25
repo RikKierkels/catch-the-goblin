@@ -1,4 +1,4 @@
-import { IMAGES } from "./utils/constants.js";
+import { IMAGES } from "../utils/constants.js";
 import ImageCache from "./image-cache.js";
 
 const drawBackground = (context, image) => context.drawImage(image, 0, 0);

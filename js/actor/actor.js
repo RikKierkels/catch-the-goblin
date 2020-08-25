@@ -1,5 +1,5 @@
-import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./world.js";
-import { ACTOR_TYPES } from "./utils/constants.js";
+import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "../core/world.js";
+import { ACTOR_TYPES } from "../utils/constants.js";
 import { Box, CanMove, Location } from "./can-move.js";
 import Hero from "./hero.js";
 

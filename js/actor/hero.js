@@ -5,19 +5,19 @@ import { WORLD_BOUNDARY_EAST, WORLD_BOUNDARY_NORTH, WORLD_BOUNDARY_SOUTH, WORLD_
 const getTravelledDistance = (distance, input) => {
   let location = Location();
 
-  if (input[INPUT_KEYS.ARROW_LEFT]) {
+  if (input[INPUT_KEYS.ARROW_LEFT] || input[INPUT_KEYS.A]) {
     location = location.plus(Location(-distance, 0));
   }
 
-  if (input[INPUT_KEYS.ARROW_RIGHT]) {
+  if (input[INPUT_KEYS.ARROW_RIGHT] || input[INPUT_KEYS.D]) {
     location = location.plus(Location(distance, 0));
   }
 
-  if (input[INPUT_KEYS.ARROW_UP]) {
+  if (input[INPUT_KEYS.ARROW_UP] || input[INPUT_KEYS.W]) {
     location = location.plus(Location(0, -distance));
   }
 
-  if (input[INPUT_KEYS.ARROW_DOWN]) {
+  if (input[INPUT_KEYS.ARROW_DOWN] || input[INPUT_KEYS.S]) {
     location = location.plus(Location(0, distance));
   }
 

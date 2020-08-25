@@ -1,37 +1,54 @@
 import { INPUT_KEYS } from "./utils/constants.js";
-import { isWithinBoundsEast, isWithinBoundsNorth, isWithinBoundsSouth, isWithinBoundsWest } from "./world.js";
+import { Location } from "./can-move.js";
+import { WORLD_BOUNDARY_EAST, WORLD_BOUNDARY_NORTH, WORLD_BOUNDARY_SOUTH, WORLD_BOUNDARY_WEST } from "./world.js";
 
-const getNextCoordinates = (x, y, distance, input) => {
+const getTravelledDistance = (distance, input) => {
+  let location = Location();
+
   if (input[INPUT_KEYS.ARROW_LEFT]) {
-    x -= distance;
+    location = location.plus(Location(-distance, 0));
   }
 
   if (input[INPUT_KEYS.ARROW_RIGHT]) {
-    x += distance;
+    location = location.plus(Location(distance, 0));
   }
 
   if (input[INPUT_KEYS.ARROW_UP]) {
-    y -= distance;
+    location = location.plus(Location(0, -distance));
   }
 
   if (input[INPUT_KEYS.ARROW_DOWN]) {
-    y += distance;
+    location = location.plus(Location(0, distance));
   }
 
-  return [x, y];
+  return location;
 };
 
-const stayInWorld = (currentX, nextX, currentY, nextY, height, width) => {
-  const x = isWithinBoundsEast(nextX + width) && isWithinBoundsWest(nextX) ? nextX : currentX;
-  const y = isWithinBoundsNorth(nextY) && isWithinBoundsSouth(nextY + height) ? nextY : currentY;
-  return [x, y];
+const isExceedingWorldBoundaryX = (x, width) => x < WORLD_BOUNDARY_WEST || x + width > WORLD_BOUNDARY_EAST;
+const isExceedingWorldBoundaryY = (y, height) => y < WORLD_BOUNDARY_NORTH || y + height > WORLD_BOUNDARY_SOUTH;
+
+const stayInWorld = (currentLocation, nextLocation, width, height) => {
+  let locationInWorld = Location();
+
+  const { x: currentX, y: currentY } = currentLocation.get();
+  const { x: nextX, y: nextY } = nextLocation.get();
+
+  locationInWorld = isExceedingWorldBoundaryX(nextX, width)
+    ? locationInWorld.plus(Location(currentX, 0))
+    : locationInWorld.plus(Location(nextX, 0));
+
+  locationInWorld = isExceedingWorldBoundaryY(nextY, height)
+    ? locationInWorld.plus(Location(0, currentY))
+    : locationInWorld.plus(Location(0, nextY));
+
+  return locationInWorld;
 };
 
 const Hero = {
   update(time, input) {
-    let [x, y] = getNextCoordinates(this.x, this.y, this.speed * time, input);
-    [x, y] = stayInWorld(this.x, x, this.y, y, this.height, this.width);
-    this.setCoordinates(x, y);
+    const distance = getTravelledDistance(this.speed * time, input);
+    const nextLocation = stayInWorld(this.location, this.location.plus(distance), this.width, this.height);
+    this.moveTo(nextLocation);
 
     return this;
   },

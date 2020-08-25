@@ -1,8 +1,8 @@
 export const WORLD_WIDTH_PX = 512;
 export const WORLD_HEIGHT_PX = 480;
-const WORLD_NO_MANS_LAND_PX = 32;
+const NO_MANS_LAND_PX = 32;
 
-export const isWithinBoundsNorth = (y) => y > WORLD_NO_MANS_LAND_PX;
-export const isWithinBoundsSouth = (y) => y < WORLD_HEIGHT_PX - WORLD_NO_MANS_LAND_PX;
-export const isWithinBoundsWest = (x) => x > WORLD_NO_MANS_LAND_PX;
-export const isWithinBoundsEast = (x) => x < WORLD_WIDTH_PX - WORLD_NO_MANS_LAND_PX;
+export const WORLD_BOUNDARY_NORTH = NO_MANS_LAND_PX;
+export const WORLD_BOUNDARY_EAST = WORLD_WIDTH_PX - NO_MANS_LAND_PX;
+export const WORLD_BOUNDARY_SOUTH = WORLD_HEIGHT_PX - NO_MANS_LAND_PX;
+export const WORLD_BOUNDARY_WEST = NO_MANS_LAND_PX;

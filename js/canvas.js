@@ -18,7 +18,7 @@ const Canvas = ({ width, height, imageCache = ImageCache() }) => {
   function sync(state) {
     console.log(state);
     drawBackground(context, imageCache.load(IMAGES.BACKGROUND));
-    drawHero(context, imageCache.load(IMAGES.HERO), state.hero.getCoordinates());
+    drawHero(context, imageCache.load(IMAGES.HERO), state.hero.location.get());
     return this;
   }
 

@@ -6,34 +6,24 @@ const makeLoadImage = (onload) => (src) => {
 const ImageCache = () => {
   const cache = Object.create(null);
 
-  function load(src) {
-    return cache[src];
-  }
-
-  function save(src, image) {
-    cache[src] = image;
-  }
-
-  function preload(sources) {
-    return new Promise((resolve) => {
-      const toLoadCount = sources.length;
-      let loadedCount = 0;
-
-      const onload = (src, image) => {
-        loadedCount++;
-        save(src, image);
-        if (loadedCount === toLoadCount) resolve(this);
-      };
-
-      const loadImage = makeLoadImage(onload, onerror);
-      sources.forEach(loadImage);
-    });
-  }
-
   return {
-    load,
-    save,
-    preload,
+    load: (src) => cache[src],
+    save: (src, image) => (cache[src] = image),
+    async preload(sources) {
+      return new Promise((resolve) => {
+        const toLoadCount = sources.length;
+        let loadedCount = 0;
+
+        const onload = (src, image) => {
+          loadedCount++;
+          this.save(src, image);
+          if (loadedCount === toLoadCount) resolve(this);
+        };
+
+        const loadImageFromSource = makeLoadImage(onload);
+        sources.forEach(loadImageFromSource);
+      });
+    },
   };
 };
 

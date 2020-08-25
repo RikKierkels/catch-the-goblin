@@ -13,4 +13,4 @@ const trackInput = (keys) => {
   return down;
 };
 
-export default trackInput;
+export { trackInput };

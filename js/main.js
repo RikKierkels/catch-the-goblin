@@ -1,14 +1,14 @@
-import Canvas from "./ui/canvas.js";
-import { runFrame } from "./core/frame.js";
-import { ACTOR_TYPES, IMAGES, INPUT_KEYS } from "./utils/constants.js";
-import ImageCache from "./ui/image-cache.js";
-import trackInput from "./core/input.js";
-import State from "./core/state.js";
 import ActorFactory from "./actor/actor.js";
-import { compose } from "./utils/fp.js";
-import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./core/world.js";
+import Canvas from "./ui/canvas.js";
+import State from "./core/state.js";
 import Spawn from "./spawn.js";
 import Wave from "./wave.js";
+import ImageCache from "./ui/image-cache.js";
+import { trackInput } from "./core/input.js";
+import { runFrame } from "./core/frame.js";
+import { compose } from "./utils/fp.js";
+import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./core/world.js";
+import { ACTOR_TYPES, IMAGES, INPUT_KEYS } from "./utils/constants.js";
 
 const asSpawns = (spawns) => spawns.map(Spawn);
 const asWaves = (waves) => waves.map(Wave);

@@ -7,6 +7,12 @@ import State from "./core/state.js";
 import ActorFactory from "./actor/actor.js";
 import { compose } from "./utils/fp.js";
 import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./core/world.js";
+import Spawn from "./spawn.js";
+import Wave from "./wave.js";
+
+const asSpawns = (spawns) => spawns.map(Spawn);
+const asWaves = (waves) => waves.map(Wave);
+const waves = asWaves([{ id: 1, spawns: asSpawns([{ type: ACTOR_TYPES.GOBLIN, total: 1 }]) }]);
 
 const runWave = (state, canvas, input) =>
   new Promise((resolve) =>
@@ -33,7 +39,11 @@ const runGame = async () => {
   let state = State.create({ hero });
 
   let canvas = Canvas({ width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX, imageCache }).load(document.body);
-  [state, canvas] = await runWave(state, canvas, input);
+
+  for (const wave of waves) {
+    state = state.addWave(wave);
+    [state, canvas] = await runWave(state, canvas, input);
+  }
 };
 
 runGame();

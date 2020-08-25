@@ -1,11 +1,18 @@
 export const IMAGES = {
   BACKGROUND: "img/background.png",
   HERO: "img/hero.png",
-  MONSTER: "img/monster.png",
+  GOBLIN: "img/monster.png",
 };
 
 export const ACTOR_TYPES = {
-  HERO: 0,
+  HERO: "HERO",
+  GOBLIN: "GOBLIN",
+};
+
+export const ACTOR_STATUS = {
+  UNSPAWNED: 0,
+  SPAWNED: 1,
+  DEAD: 2,
 };
 
 export const INPUT_KEYS = {

@@ -1,4 +1,4 @@
-import { INPUT_KEYS } from "../utils/constants.js";
+import { ACTOR_TYPES, INPUT_KEYS } from "../utils/constants.js";
 import { Location } from "./can-move.js";
 import { WORLD_BOUNDARY_EAST, WORLD_BOUNDARY_NORTH, WORLD_BOUNDARY_SOUTH, WORLD_BOUNDARY_WEST } from "../core/world.js";
 

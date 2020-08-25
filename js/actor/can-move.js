@@ -15,10 +15,7 @@ const Location = (x = 0, y = 0) => ({
   },
 });
 
-const Box = ({ location, width, height }) => ({
-  location,
-  width,
-  height,
+const Box = {
   overlapsX(other) {
     const { x: thisX } = this.location.get();
     const { x: otherX } = other.location.get();
@@ -33,7 +30,7 @@ const Box = ({ location, width, height }) => ({
   overlaps(other) {
     return this.overlapsX(other) && this.overlapsY(other);
   },
-});
+};
 
 const CanMove = {
   moveTo(location) {

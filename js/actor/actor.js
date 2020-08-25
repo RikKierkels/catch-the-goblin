@@ -9,17 +9,13 @@ const centerOfWorld = () => Location().center(WORLD_WIDTH_PX, WORLD_HEIGHT_PX);
 const ACTORS = {
   [ACTOR_TYPES.HERO]: () =>
     Object.assign(
-      { type: ACTOR_TYPES.HERO, speed: 256 },
-      Box({ location: centerOfWorld(), width: 32, height: 32 }),
+      { type: ACTOR_TYPES.HERO, location: centerOfWorld(), width: 32, height: 32, speed: 256 },
+      Box,
       Hero,
       CanMove,
     ),
   [ACTOR_TYPES.GOBLIN]: () =>
-    Object.assign(
-      { type: ACTOR_TYPES.GOBLIN, speed: 0 },
-      Box({ location: Location(0, 0), width: 32, height: 32 }),
-      Goblin,
-    ),
+    Object.assign({ type: ACTOR_TYPES.GOBLIN, location: Location(0, 0), width: 32, height: 32, speed: 0 }, Box, Goblin),
 };
 
 export default { create: (type) => ACTORS[type]() };

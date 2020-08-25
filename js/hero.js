@@ -33,13 +33,13 @@ const stayInWorld = (currentLocation, nextLocation, width, height) => {
   const { x: currentX, y: currentY } = currentLocation.get();
   const { x: nextX, y: nextY } = nextLocation.get();
 
-  locationInWorld = isExceedingWorldBoundaryX(nextX, width)
-    ? locationInWorld.plus(Location(currentX, 0))
-    : locationInWorld.plus(Location(nextX, 0));
+  locationInWorld = locationInWorld.plus(
+    isExceedingWorldBoundaryX(nextX, width) ? Location(currentX, 0) : Location(nextX, 0),
+  );
 
-  locationInWorld = isExceedingWorldBoundaryY(nextY, height)
-    ? locationInWorld.plus(Location(0, currentY))
-    : locationInWorld.plus(Location(0, nextY));
+  locationInWorld = locationInWorld.plus(
+    isExceedingWorldBoundaryY(nextY, height) ? Location(0, currentY) : Location(0, nextY),
+  );
 
   return locationInWorld;
 };

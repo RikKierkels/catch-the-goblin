@@ -12,7 +12,7 @@ import { ACTOR_TYPES, IMAGES, INPUT_KEYS } from "./utils/constants.js";
 
 const asSpawns = (spawns) => spawns.map(Spawn);
 const asWaves = (waves) => waves.map(Wave);
-const waves = asWaves([{ id: 1, spawns: asSpawns([{ type: ACTOR_TYPES.GOBLIN, total: 1 }]) }]);
+const waves = asWaves([{ id: 1, spawns: asSpawns([{ type: ACTOR_TYPES.GOBLIN, total: 5, interval: 2 }]) }]);
 
 const runWave = (state, canvas, input) =>
   new Promise((resolve) =>

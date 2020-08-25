@@ -34,11 +34,10 @@ const runGame = async () => {
 
   const imagesToLoad = Object.values(IMAGES);
   const imageCache = await ImageCache().preload(imagesToLoad);
+  let canvas = Canvas({ width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX, imageCache }).load(document.body);
 
   const hero = ActorFactory.create(ACTOR_TYPES.HERO);
   let state = State.create({ hero });
-
-  let canvas = Canvas({ width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX, imageCache }).load(document.body);
 
   for (const wave of waves) {
     state = state.addWave(wave);

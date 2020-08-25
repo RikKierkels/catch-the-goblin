@@ -2,10 +2,6 @@ const Location = (x = 0, y = 0) => ({
   get() {
     return { x, y };
   },
-  center(x, y) {
-    const center = (x) => x / 2;
-    return Location(center(x), center(y));
-  },
   plus(other) {
     const { x: otherX, y: otherY } = other.get();
     return Location(x + otherX, y + otherY);

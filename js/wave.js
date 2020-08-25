@@ -1,5 +1,3 @@
-const isEmpty = (xs) => xs.length;
-
 const Wave = ({ id, spawns }) => {
   let spawned = [];
 

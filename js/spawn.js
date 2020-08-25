@@ -6,21 +6,19 @@ const Spawn = ({ type, total, interval }) => {
   let timer = Timer(interval);
 
   return {
-    hasSpawnedAll: () => total < 1,
+    canSpawnMore: () => total > 0,
     update(time) {
-      if (this.hasSpawnedAll()) return this;
+      if (!this.canSpawnMore()) return this;
       timer = timer.update(time);
       return this;
     },
     spawn() {
-      if (this.hasSpawnedAll()) return spawned;
+      if (!this.canSpawnMore() || !timer.hasExpired()) return spawned;
 
-      if (timer.hasExpired()) {
-        const actor = ActorFactory.create(type);
-        spawned = [...spawned, actor];
-        total--;
-        timer = timer.reset();
-      }
+      const actor = ActorFactory.create(type);
+      spawned = [...spawned, actor];
+      total--;
+      timer = timer.reset();
 
       return spawned;
     },

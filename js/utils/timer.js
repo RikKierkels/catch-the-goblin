@@ -5,7 +5,6 @@ const Timer = (time) => {
     hasExpired: () => elapsedTimeSec >= time,
     update(time) {
       elapsedTimeSec += time;
-      console.log(elapsedTimeSec);
       return this;
     },
     reset() {

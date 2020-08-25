@@ -5,15 +5,11 @@ const Wave = ({ id, spawns }) => {
 
   return {
     id,
-    isCleared: () => spawns.all((spawn) => spawn.hasSpawnedAll()),
+    isCleared: () => spawns.all((spawn) => !spawn.canSpawnMore()),
     spawned: () => spawned,
     update(time) {
       spawns = spawns.map((spawn) => spawn.update(time));
-      spawned = spawns
-        .map((spawn) => spawn.spawn())
-        .filter(isEmpty)
-        .concat(spawned)
-        .flat(1);
+      spawned = spawns.flatMap((spawn) => spawn.spawn()).concat(spawned);
       spawns = spawns.map((spawn) => spawn.clear());
       return this;
     },

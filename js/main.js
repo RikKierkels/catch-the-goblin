@@ -1,11 +1,12 @@
 import ActorFactory from "./actor/actor.js";
 import Canvas from "./ui/canvas.js";
 import State from "./core/state.js";
-import Spawn from "./spawn.js";
-import Wave from "./wave.js";
+import Spawn from "./core/spawn.js";
+import Wave from "./core/wave.js";
 import ImageCache from "./ui/image-cache.js";
 import { trackInput } from "./core/input.js";
 import { runFrame } from "./core/frame.js";
+import { isEmpty } from "./utils/utils.js";
 import { compose } from "./utils/fp.js";
 import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./core/world.js";
 import { ACTOR_TYPES, IMAGES, INPUT_KEYS } from "./utils/constants.js";
@@ -20,9 +21,10 @@ const runWave = (state, canvas, input) =>
       state = state.update(time, input);
       canvas = canvas.sync(state);
 
-      if (true) return true;
+      const hasClearedWave = state.wave.isCleared() && isEmpty(state.wave.spawned());
+      if (!hasClearedWave) return true;
 
-      if (false) {
+      if (hasClearedWave) {
         resolve([state, canvas]);
         return false;
       }

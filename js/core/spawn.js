@@ -1,5 +1,5 @@
-import ActorFactory from "./actor/actor.js";
-import Timer from "./utils/timer.js";
+import ActorFactory from "../actor/actor.js";
+import Timer from "../utils/timer.js";
 
 const Spawn = ({ type, total, interval }) => {
   let spawned = [];

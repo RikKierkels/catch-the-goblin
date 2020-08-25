@@ -3,7 +3,7 @@ const Wave = ({ id, spawns }) => {
 
   return {
     id,
-    isCleared: () => spawns.all((spawn) => !spawn.canSpawnMore()),
+    isCleared: () => spawns.every((spawn) => !spawn.canSpawnMore()),
     spawned: () => spawned,
     update(time) {
       spawns = spawns.map((spawn) => spawn.update(time));

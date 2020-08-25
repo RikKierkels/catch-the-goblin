@@ -3,4 +3,6 @@ const randomBetween = (low, high) => {
   return Math.random() * (high - low) + low;
 };
 
-export { randomBetween };
+const isEmpty = (arr) => !Array.isArray(arr) || arr.length === 0;
+
+export { randomBetween, isEmpty };

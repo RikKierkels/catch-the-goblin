@@ -1,27 +1,31 @@
-import { isEmpty } from "../utils/utils.js";
-import { not } from "../utils/fp.js";
-
-const toImageToLoad = (src) =>
+const loadImage = (src) =>
   new Promise((resolve) => {
     const onload = (src, image) => resolve([src, image]);
     const onerror = () => resolve([]);
-    return loadImageFromSource(onload, onerror, src);
+    return createImageToLoad(onload, onerror, src);
   });
 
-const loadImageFromSource = (onload, onerror, src) => {
+const createImageToLoad = (onload, onerror, src) => {
   const image = new Image();
   return Object.assign(image, { src, onload: onload(src, image), onerror });
 };
 
 const ImageCache = () => {
   const cache = Object.create(null);
+  const store = ([src, image]) => {
+    if (!src || !image) return;
+    cache[src] = image;
+  };
 
   return {
-    load: (src) => cache[src],
-    save: (src, image) => (cache[src] = image),
-    async preload(sources) {
-      const loadedImages = await Promise.all(sources.map(toImageToLoad));
-      loadedImages.filter(not(isEmpty)).forEach(([src, image]) => this.save(src, image));
+    get: (src) => cache[src],
+    async load(source) {
+      const image = await loadImage(source);
+      store(image);
+      return this;
+    },
+    async loadBatch(sources) {
+      await Promise.all(sources.map(this.load));
       return this;
     },
   };

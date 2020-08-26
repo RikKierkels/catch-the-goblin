@@ -36,7 +36,7 @@ const runGame = async () => {
   const input = compose(trackInput, Object.values)(INPUT_KEYS);
 
   const imagesToLoad = Object.values(IMAGES);
-  const imageCache = await ImageCache().preload(imagesToLoad);
+  const imageCache = await ImageCache().loadBatch(imagesToLoad);
   let canvas = Canvas({ width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX, imageCache }).load(document.body);
 
   const hero = ActorFactory.create(ACTOR_TYPES.HERO);

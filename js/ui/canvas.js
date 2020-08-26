@@ -20,9 +20,9 @@ const Canvas = ({ width, height, imageCache = ImageCache() }) => {
       const wave = state.wave();
       const hero = state.hero();
       // TODO: Rework drawing
-      drawBackground(context, imageCache.load(IMAGES.BACKGROUND));
-      drawHero(context, imageCache.load(IMAGES.HERO), hero.location.get());
-      wave.actors().forEach((actor) => drawActor(context, imageCache.load(IMAGES[actor.type]), actor.location.get()));
+      drawBackground(context, imageCache.get(IMAGES.BACKGROUND));
+      drawHero(context, imageCache.get(IMAGES.HERO), hero.location.get());
+      wave.actors().forEach((actor) => drawActor(context, imageCache.get(IMAGES[actor.type]), actor.location.get()));
       return this;
     },
   };

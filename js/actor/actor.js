@@ -1,7 +1,9 @@
 import { Box, CanMove, Location } from "./can-move.js";
 import Hero from "./hero.js";
 import Goblin from "./goblin.js";
+import IsMortal from "./is-mortal.js";
 import { randomBetween } from "../utils/utils.js";
+import { pipe } from "../utils/fp.js";
 import { ACTOR_TYPES } from "../utils/constants.js";
 import {
   WORLD_BOUNDARY_EAST,
@@ -20,21 +22,22 @@ const randomInWorld = ({ width, height }) =>
     randomBetween(WORLD_BOUNDARY_NORTH, WORLD_BOUNDARY_SOUTH - height),
   );
 
+const createHero = pipe(Box, Hero, CanMove, IsMortal);
+const createGoblin = pipe(Box, Goblin);
+
 const ACTORS = {
   [ACTOR_TYPES.HERO]: () =>
-    Object.assign(
-      { type: ACTOR_TYPES.HERO, location: centerOfWorld(), width: 32, height: 32, speed: 256 },
-      Box,
-      Hero,
-      CanMove,
-    ),
+    createHero({
+      location: centerOfWorld(),
+      width: 32,
+      height: 32,
+      speed: 256,
+      isDead: false,
+      isHit: false,
+    }),
   [ACTOR_TYPES.GOBLIN]: () => {
     const dimensions = { width: 32, height: 32 };
-    return Object.assign(
-      { type: ACTOR_TYPES.GOBLIN, location: randomInWorld(dimensions), ...dimensions, speed: 0 },
-      Box,
-      Goblin,
-    );
+    return createGoblin({ type: ACTOR_TYPES.GOBLIN, location: randomInWorld(dimensions), ...dimensions, speed: 0 });
   },
 };
 

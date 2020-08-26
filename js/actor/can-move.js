@@ -1,3 +1,5 @@
+import { FunctionalMixin } from "../utils/utils.js";
+
 const Location = (x = 0, y = 0) => ({
   get() {
     return { x, y };
@@ -11,7 +13,7 @@ const Location = (x = 0, y = 0) => ({
   },
 });
 
-const Box = {
+const Box = FunctionalMixin({
   overlapsX(other) {
     const { x: thisX } = this.location.get();
     const { x: otherX } = other.location.get();
@@ -26,12 +28,15 @@ const Box = {
   overlaps(other) {
     return this.overlapsX(other) && this.overlapsY(other);
   },
-};
+  collides(others) {
+    return others.find((other) => other.overlaps(this));
+  },
+});
 
-const CanMove = {
+const CanMove = FunctionalMixin({
   moveTo(location) {
     this.location = location;
   },
-};
+});
 
 export { Location, Box, CanMove };

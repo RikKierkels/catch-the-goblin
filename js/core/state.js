@@ -1,18 +1,20 @@
-const State = {
+const State = ({ hero, wave = null }) => ({
+  hero: () => hero,
+  wave: () => wave,
   update(time, input) {
-    this.hero = this.hero.update(time, input);
-    this.wave = this.wave && this.wave.update(time);
+    hero = hero.update(time, input);
+    wave = wave && wave.update(time);
 
-    const heroCollidingWith = this.hero.collides(this.wave.spawned());
+    const heroCollidingWith = hero.collides(wave.actors());
     if (heroCollidingWith) {
     }
 
     return this;
   },
-  addWave(wave) {
-    this.wave = wave;
+  addWave(nextWave) {
+    wave = nextWave;
     return this;
   },
-};
+});
 
-export default { create: ({ hero }) => Object.assign({ hero }, State) };
+export default State;

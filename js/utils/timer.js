@@ -1,14 +1,14 @@
 const Timer = (time) => {
-  let elapsedTimeSec = 0;
+  let elapsedTime = 0;
 
   return {
-    hasExpired: () => elapsedTimeSec >= time,
+    hasExpired: () => elapsedTime >= time,
     update(time) {
-      elapsedTimeSec += time;
+      elapsedTime += time;
       return this;
     },
     reset() {
-      elapsedTimeSec = 0;
+      elapsedTime = 0;
       return this;
     },
   };

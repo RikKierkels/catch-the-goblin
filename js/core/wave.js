@@ -1,13 +1,12 @@
 const Wave = ({ id, spawns }) => {
-  let spawned = [];
+  let actors = [];
 
   return {
-    id,
     isCleared: () => spawns.every((spawn) => !spawn.canSpawnMore()),
-    spawned: () => spawned,
+    actors: () => actors,
     update(time) {
       spawns = spawns.map((spawn) => spawn.update(time));
-      spawned = spawns.flatMap((spawn) => spawn.spawn()).concat(spawned);
+      actors = spawns.flatMap((spawn) => spawn.spawn()).concat(actors);
       spawns = spawns.map((spawn) => spawn.clear());
       return this;
     },

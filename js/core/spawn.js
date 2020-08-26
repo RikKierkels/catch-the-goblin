@@ -2,7 +2,7 @@ import ActorFactory from "../actor/actor.js";
 import Timer from "../utils/timer.js";
 
 const Spawn = ({ type, total, interval }) => {
-  let spawned = [];
+  let actors = [];
   let timer = Timer(interval);
 
   return {
@@ -13,17 +13,17 @@ const Spawn = ({ type, total, interval }) => {
       return this;
     },
     spawn() {
-      if (!this.canSpawnMore() || !timer.hasExpired()) return spawned;
+      if (!this.canSpawnMore() || !timer.hasExpired()) return actors;
 
       const actor = ActorFactory.create(type);
-      spawned = [...spawned, actor];
+      actors = [...actors, actor];
       total--;
       timer = timer.reset();
 
-      return spawned;
+      return actors;
     },
     clear() {
-      spawned = [];
+      actors = [];
       return this;
     },
   };

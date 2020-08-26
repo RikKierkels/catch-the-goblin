@@ -20,8 +20,9 @@ const runWave = (state, canvas, input) =>
     runFrame((time) => {
       state = state.update(time, input);
       canvas = canvas.sync(state);
+      const wave = state.wave();
 
-      const hasClearedWave = state.wave.isCleared() && isEmpty(state.wave.spawned());
+      const hasClearedWave = wave.isCleared() && isEmpty(wave.actors());
       if (!hasClearedWave) return true;
 
       if (hasClearedWave) {
@@ -39,7 +40,7 @@ const runGame = async () => {
   let canvas = Canvas({ width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX, imageCache }).load(document.body);
 
   const hero = ActorFactory.create(ACTOR_TYPES.HERO);
-  let state = State.create({ hero });
+  let state = State({ hero });
 
   for (const wave of waves) {
     state = state.addWave(wave);

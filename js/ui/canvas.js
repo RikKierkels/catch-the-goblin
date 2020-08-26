@@ -17,12 +17,12 @@ const Canvas = ({ width, height, imageCache = ImageCache() }) => {
       return this;
     },
     sync(state) {
+      const wave = state.wave();
+      const hero = state.hero();
       // TODO: Rework drawing
       drawBackground(context, imageCache.load(IMAGES.BACKGROUND));
-      drawHero(context, imageCache.load(IMAGES.HERO), state.hero.location.get());
-      state.wave
-        .spawned()
-        .forEach((actor) => drawActor(context, imageCache.load(IMAGES[actor.type]), actor.location.get()));
+      drawHero(context, imageCache.load(IMAGES.HERO), hero.location.get());
+      wave.actors().forEach((actor) => drawActor(context, imageCache.load(IMAGES[actor.type]), actor.location.get()));
       return this;
     },
   };

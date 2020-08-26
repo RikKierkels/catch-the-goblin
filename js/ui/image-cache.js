@@ -1,10 +1,11 @@
 import { isEmpty } from "../utils/utils.js";
+import { not } from "../utils/fp.js";
 
-const toFutureImage = (source) =>
+const toImageToLoad = (src) =>
   new Promise((resolve) => {
     const onload = (src, image) => resolve([src, image]);
     const onerror = () => resolve([]);
-    return loadImageFromSource(onload, onerror, source);
+    return loadImageFromSource(onload, onerror, src);
   });
 
 const loadImageFromSource = (onload, onerror, src) => {
@@ -19,9 +20,8 @@ const ImageCache = () => {
     load: (src) => cache[src],
     save: (src, image) => (cache[src] = image),
     async preload(sources) {
-      const futureImages = sources.map(toFutureImage);
-      const loadedImages = await Promise.all(futureImages);
-      loadedImages.filter((x) => isEmpty(x)).forEach(([src, image]) => this.save(src, image));
+      const loadedImages = await Promise.all(sources.map(toImageToLoad));
+      loadedImages.filter(not(isEmpty)).forEach(([src, image]) => this.save(src, image));
       return this;
     },
   };

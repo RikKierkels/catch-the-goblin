@@ -5,8 +5,8 @@ const State = ({ hero, wave = null }) => ({
     hero = hero.update(time, input);
     wave = wave && wave.update(time);
 
-    const heroCollidingWith = hero.collides(wave.actors());
-    if (heroCollidingWith) {
+    const actorCollidingWithHero = hero.collides(wave.actors());
+    if (actorCollidingWithHero) {
     }
 
     return this;

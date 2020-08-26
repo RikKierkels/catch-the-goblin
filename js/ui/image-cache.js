@@ -1,6 +1,15 @@
-const makeLoadImage = (onload) => (src) => {
+import { isEmpty } from "../utils/utils.js";
+
+const toFutureImage = (source) =>
+  new Promise((resolve) => {
+    const onload = (src, image) => resolve([src, image]);
+    const onerror = () => resolve([]);
+    return loadImageFromSource(onload, onerror, source);
+  });
+
+const loadImageFromSource = (onload, onerror, src) => {
   const image = new Image();
-  return Object.assign(image, { src, onload: onload(src, image) });
+  return Object.assign(image, { src, onload: onload(src, image), onerror });
 };
 
 const ImageCache = () => {
@@ -10,19 +19,10 @@ const ImageCache = () => {
     load: (src) => cache[src],
     save: (src, image) => (cache[src] = image),
     async preload(sources) {
-      return new Promise((resolve) => {
-        const toLoadCount = sources.length;
-        let loadedCount = 0;
-
-        const onload = (src, image) => {
-          loadedCount++;
-          this.save(src, image);
-          if (loadedCount === toLoadCount) resolve(this);
-        };
-
-        const loadImageFromSource = makeLoadImage(onload);
-        sources.forEach(loadImageFromSource);
-      });
+      const futureImages = sources.map(toFutureImage);
+      const loadedImages = await Promise.all(futureImages);
+      loadedImages.filter((x) => isEmpty(x)).forEach(([src, image]) => this.save(src, image));
+      return this;
     },
   };
 };

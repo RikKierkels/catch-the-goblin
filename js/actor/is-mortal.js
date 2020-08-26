@@ -1,8 +1,8 @@
 import { FunctionalMixin } from "../utils/utils.js";
 
 const IsMortal = FunctionalMixin({
-  takeDamage(damage) {
-    this.health -= damage;
+  wound(damage = 1) {
+    this.hitpoints -= damage;
     this.isHit = true;
   },
   die() {

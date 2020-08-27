@@ -40,6 +40,11 @@ const Hero = FunctionalMixin({
 
     return this;
   },
+  hit() {},
+  draw(context, image) {
+    const { x, y } = this.location.get();
+    context.drawImage(image, x, y);
+  },
 });
 
 export default Hero;

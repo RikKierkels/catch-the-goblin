@@ -11,6 +11,9 @@ const Actor = FunctionalMixin({
   hit() {
     required("hit");
   },
+  draw() {
+    required("draw");
+  },
 });
 
 export default Actor;

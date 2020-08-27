@@ -1,4 +1,4 @@
-import ActorFactory from "./actor/actor.js";
+import ActorFactory from "./actor/actor-factory.js";
 import Canvas from "./ui/canvas.js";
 import State from "./core/state.js";
 import Spawn from "./core/spawn.js";

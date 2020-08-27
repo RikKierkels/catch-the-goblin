@@ -1,38 +1,16 @@
-import { IsBox, IsMovableBox } from "./box.js";
-import Hero from "./hero.js";
-import Goblin from "./goblin.js";
-import IsMortal from "./is-mortal.js";
-import { Location } from "../utils/location.js";
-import { pipe } from "../utils/fp.js";
-import { ACTOR_TYPES } from "../utils/constants.js";
-import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "../core/world.js";
+import { FunctionalMixin } from "../utils/utils.js";
 
-const location = Location();
-const createHero = pipe(IsMovableBox, IsMortal, Hero);
-const createGoblin = pipe(IsBox, Goblin);
+function required(name) {
+  throw new Error(`Forgot to override the actor base function: ${name}`);
+}
 
-const ACTORS = {
-  [ACTOR_TYPES.HERO]: () =>
-    createHero({
-      type: ACTOR_TYPES.HERO,
-      location: location.center(WORLD_WIDTH_PX, WORLD_HEIGHT_PX),
-      width: 32,
-      height: 32,
-      speed: 256,
-      hitpoints: 5,
-      isDead: false,
-      isHit: false,
-    }),
-  [ACTOR_TYPES.GOBLIN]: () => {
-    const size = 32;
-    return createGoblin({
-      type: ACTOR_TYPES.GOBLIN,
-      location: location.randomInWorld(size, size),
-      width: size,
-      height: size,
-      speed: 0,
-    });
+const Actor = FunctionalMixin({
+  update() {
+    required("update");
   },
-};
+  hit() {
+    required("hit");
+  },
+});
 
-export default { create: (type) => ACTORS[type]() };
+export default Actor;

@@ -1,4 +1,4 @@
-import ActorFactory from "../actor/actor.js";
+import ActorFactory from "../actor/actor-factory.js";
 import Timer from "../utils/timer.js";
 
 const Spawn = ({ type, total, interval }) => {

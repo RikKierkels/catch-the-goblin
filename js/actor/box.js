@@ -31,6 +31,7 @@ const IsMovableBox = pipe(
   FunctionalMixin({
     moveTo(location) {
       this.location = location;
+      return this;
     },
     moveToInWorld(nextLocation) {
       let locationInWorld = Location();

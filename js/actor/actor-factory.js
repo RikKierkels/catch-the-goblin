@@ -9,11 +9,11 @@ import { ACTOR_TYPES } from "../utils/constants.js";
 import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "../core/world.js";
 
 const location = Location();
-const createHero = pipe(Actor, IsMovableBox, IsMortal, Hero);
-const createGoblin = pipe(Actor, IsBox, Goblin);
+const createHero = pipe(Actor, Hero, IsMovableBox, IsMortal);
+const createGoblin = pipe(Actor, Goblin, IsBox);
 
 const ACTORS = {
-  [ACTOR_TYPES.HERO]: () =>
+  [ACTOR_TYPES.HERO]: (overrides) =>
     createHero({
       type: ACTOR_TYPES.HERO,
       location: location.center(WORLD_WIDTH_PX, WORLD_HEIGHT_PX),
@@ -23,8 +23,9 @@ const ACTORS = {
       hitpoints: 5,
       isDead: false,
       isHit: false,
+      ...overrides,
     }),
-  [ACTOR_TYPES.GOBLIN]: () => {
+  [ACTOR_TYPES.GOBLIN]: (overrides) => {
     const size = 32;
     return createGoblin({
       type: ACTOR_TYPES.GOBLIN,
@@ -33,8 +34,9 @@ const ACTORS = {
       height: size,
       speed: 0,
       baseDamage: 1,
+      ...overrides,
     });
   },
 };
 
-export default { create: (type) => ACTORS[type]() };
+export default { create: (type, overrides) => ACTORS[type](overrides) };

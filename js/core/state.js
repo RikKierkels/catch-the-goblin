@@ -7,6 +7,7 @@ const State = ({ hero, wave = null }) => ({
 
     const actorCollidingWithHero = hero.collides(wave.actors());
     if (actorCollidingWithHero) {
+      hero.takeDamage();
     }
 
     return this;

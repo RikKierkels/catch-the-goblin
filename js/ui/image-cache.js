@@ -2,10 +2,10 @@ const loadImage = (src) =>
   new Promise((resolve) => {
     const onload = (src, image) => resolve([src, image]);
     const onerror = () => resolve([]);
-    return createImageToLoad(onload, onerror, src);
+    return createImage(onload, onerror, src);
   });
 
-const createImageToLoad = (onload, onerror, src) => {
+const createImage = (onload, onerror, src) => {
   const image = new Image();
   return Object.assign(image, { src, onload: onload(src, image), onerror });
 };

@@ -19,6 +19,7 @@ const ACTORS = {
       width: 32,
       height: 32,
       speed: 256,
+      hitpoints: 5,
       isDead: false,
       isHit: false,
     }),

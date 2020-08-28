@@ -25,3 +25,9 @@ export const INPUT_KEYS = {
   S: "s",
   D: "d",
 };
+
+export const WAVE_STATUS = {
+  PLAYING: "playing",
+  WON: "won",
+  LOST: "lost",
+};

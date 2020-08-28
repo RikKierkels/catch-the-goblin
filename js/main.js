@@ -1,34 +1,30 @@
 import ActorFactory from "./actor/actor-factory.js";
 import Canvas from "./ui/canvas.js";
 import State from "./core/state.js";
-import Spawn from "./core/spawn.js";
-import Wave from "./core/wave.js";
 import ImageCache from "./ui/image-cache.js";
 import { trackInput } from "./core/input.js";
 import { runFrame } from "./core/frame.js";
-import { isEmpty } from "./utils/utils.js";
 import { compose } from "./utils/fp.js";
+import WAVES from "./waves.js";
 import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./core/world.js";
-import { ACTOR_TYPES, IMAGES, INPUT_KEYS } from "./utils/constants.js";
+import { ACTOR_TYPES, IMAGES, INPUT_KEYS, WAVE_STATUS } from "./utils/constants.js";
 
-const asSpawns = (spawns) => spawns.map(Spawn);
-const asWaves = (waves) => waves.map(Wave);
-const waves = asWaves([{ id: 1, spawns: asSpawns([{ type: ACTOR_TYPES.GOBLIN, total: 5, interval: 2 }]) }]);
+const hasWon = (status) => status === WAVE_STATUS.WON;
+const hasLost = (status) => status === WAVE_STATUS.LOST;
+const hasWaveEnded = (status) => hasWon(status) || hasLost(status);
 
 const runWave = (state, canvas, input) =>
   new Promise((resolve) =>
     runFrame((time) => {
       state = state.update(time, input);
       canvas = canvas.sync(state);
-      const wave = state.wave();
 
-      const hasClearedWave = wave.isCleared() && isEmpty(wave.actors());
-      if (!hasClearedWave) return true;
-
-      if (hasClearedWave) {
+      if (hasWaveEnded(state.status())) {
         resolve([state, canvas]);
         return false;
       }
+
+      return true;
     }),
   );
 
@@ -42,9 +38,13 @@ const runGame = async () => {
   const hero = ActorFactory.create(ACTOR_TYPES.HERO);
   let state = State({ hero });
 
-  for (const wave of waves) {
-    state = state.addWave(wave);
+  for (let wave = 0; wave < WAVES.length; ) {
+    state = state.startWave(WAVES[wave]);
     [state, canvas] = await runWave(state, canvas, input);
+
+    const status = state.status();
+    if (hasLost(status)) break;
+    wave++;
   }
 };
 

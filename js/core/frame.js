@@ -4,10 +4,10 @@ const TOTAL_MS_IN_SEC = 1000;
 const runFrame = (frameFunction) => {
   let lastTime = null;
 
-  const frame = (time) => {
+  const frame = async (time) => {
     if (lastTime) {
       const elapsedTime = Math.min(time - lastTime, MAX_FRAME_STEP_MS) / TOTAL_MS_IN_SEC;
-      const isRequestingNextFrame = frameFunction(elapsedTime);
+      const isRequestingNextFrame = await frameFunction(elapsedTime);
       if (!isRequestingNextFrame) return;
     }
 

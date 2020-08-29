@@ -1,12 +1,12 @@
-import { INPUT_KEYS } from "../utils/constants.js";
+import { INPUT_KEY } from "../utils/constants.js";
 import { FunctionalMixin } from "../utils/utils.js";
 import { Location } from "../utils/location.js";
 
 const DIRECTION_KEYS = {
-  north: [INPUT_KEYS.ARROW_UP, INPUT_KEYS.W],
-  east: [INPUT_KEYS.ARROW_LEFT, INPUT_KEYS.A],
-  south: [INPUT_KEYS.ARROW_DOWN, INPUT_KEYS.S],
-  west: [INPUT_KEYS.ARROW_RIGHT, INPUT_KEYS.D],
+  north: [INPUT_KEY.ARROW_UP, INPUT_KEY.W],
+  east: [INPUT_KEY.ARROW_LEFT, INPUT_KEY.A],
+  south: [INPUT_KEY.ARROW_DOWN, INPUT_KEY.S],
+  west: [INPUT_KEY.ARROW_RIGHT, INPUT_KEY.D],
 };
 const hasKey = (input) => (keys) => keys.some((key) => input[key]);
 

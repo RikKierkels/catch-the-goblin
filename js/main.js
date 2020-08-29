@@ -6,7 +6,7 @@ import { runFrame } from "./core/frame.js";
 import { compose } from "./utils/fp.js";
 import WAVES from "./waves.js";
 import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "./core/world.js";
-import { IMAGES, INPUT_KEYS, WAVE_STATUS } from "./utils/constants.js";
+import { IMAGE, INPUT_KEY, WAVE_STATUS } from "./utils/constants.js";
 
 const hasWon = (status) => status === WAVE_STATUS.WON;
 const hasLost = (status) => status === WAVE_STATUS.LOST;
@@ -14,9 +14,9 @@ const hasWaveEnded = (status) => hasWon(status) || hasLost(status);
 
 const runWave = (state, canvas, input) =>
   new Promise((resolve) =>
-    runFrame((time) => {
+    runFrame(async (time) => {
       state = state.update(time, input);
-      canvas = canvas.sync(state);
+      canvas = await canvas.sync(state);
 
       if (hasWaveEnded(state.status())) {
         resolve([state, canvas]);
@@ -28,8 +28,8 @@ const runWave = (state, canvas, input) =>
   );
 
 const runGame = async () => {
-  const input = compose(trackInput, Object.values)(INPUT_KEYS);
-  const imageCache = await ImageCache().loadBatch(Object.values(IMAGES));
+  const input = compose(trackInput, Object.values)(INPUT_KEY);
+  const imageCache = await ImageCache().loadBatch(Object.values(IMAGE));
 
   let canvas = Canvas({ imageCache, width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX }).load(document.body);
   let state = State();

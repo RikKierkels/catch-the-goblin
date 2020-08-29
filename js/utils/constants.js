@@ -1,21 +1,15 @@
-export const IMAGES = {
-  BACKGROUND: "img/background.png",
-  HERO: "img/hero.png",
-  GOBLIN: "img/monster.png",
-};
-
-export const ACTOR_TYPES = {
+export const ACTOR_TYPE = {
   HERO: "HERO",
   GOBLIN: "GOBLIN",
 };
 
-export const ACTOR_STATUS = {
-  UNSPAWNED: 0,
-  SPAWNED: 1,
-  DEAD: 2,
+export const IMAGE = {
+  BACKGROUND: "img/background.png",
+  [ACTOR_TYPE.HERO]: "img/hero.png",
+  [ACTOR_TYPE.GOBLIN]: "img/monster.png",
 };
 
-export const INPUT_KEYS = {
+export const INPUT_KEY = {
   ARROW_UP: "ArrowUp",
   ARROW_RIGHT: "ArrowRight",
   ARROW_DOWN: "ArrowDown",
@@ -32,6 +26,6 @@ export const WAVE_STATUS = {
   LOST: "lost",
 };
 
-export const STYLES = {
-  LOST: "rgba(205,92,92, 0.5)",
+export const STYLE = {
+  RED_TRANSPARENT: "rgba(205,92,92, 0.5)",
 };

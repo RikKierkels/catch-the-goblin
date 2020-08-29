@@ -1,10 +1,10 @@
-import { ACTOR_TYPES, WAVE_STATUS } from "../utils/constants.js";
+import { ACTOR_TYPE, WAVE_STATUS } from "../utils/constants.js";
 import { isEmpty } from "../utils/utils.js";
 import ActorFactory from "../actor/actor-factory.js";
 
 const isWaveCleared = (wave) => wave && wave.isCleared() && isEmpty(wave.actors());
 
-const State = ({ hero = ActorFactory.create(ACTOR_TYPES.HERO), wave = null } = {}) => {
+const State = ({ hero = ActorFactory.create(ACTOR_TYPE.HERO), wave = null } = {}) => {
   let status = WAVE_STATUS.PLAYING;
 
   return {

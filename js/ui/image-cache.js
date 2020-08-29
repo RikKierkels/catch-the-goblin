@@ -12,6 +12,7 @@ const createImage = (onload, onerror, src) => {
 
 const ImageCache = () => {
   const cache = Object.create(null);
+
   const store = ([src, image]) => {
     if (!src || !image) return;
     cache[src] = image;

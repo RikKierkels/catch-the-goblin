@@ -1,12 +1,5 @@
-import { ACTOR_TYPES, IMAGES, WAVE_STATUS } from "../utils/constants.js";
+import { IMAGES, STYLES } from "../utils/constants.js";
 import ImageCache from "./image-cache.js";
-
-const drawBackground = (context, image) => context.drawImage(image, 0, 0);
-
-const FILL_STYLE_FOR_STATUS = {
-  [WAVE_STATUS.WON]: "rgb(68, 191, 255)",
-  [WAVE_STATUS.LOST]: "rgb(44, 136, 214)",
-};
 
 const Canvas = ({ width, height, imageCache = ImageCache() }) => {
   const canvas = document.createElement("canvas");
@@ -22,19 +15,27 @@ const Canvas = ({ width, height, imageCache = ImageCache() }) => {
       return this;
     },
     sync(state) {
+      this.clear();
+
       const wave = state.wave();
       const hero = state.hero();
 
-      drawBackground(context, imageCache.get(IMAGES.BACKGROUND));
+      context.drawImage(imageCache.get(IMAGES.BACKGROUND), 0, 0);
       hero.draw(context, imageForType(hero.type));
       wave.actors().forEach((actor) => actor.draw(context, imageForType(actor.type)));
 
       return this;
     },
-    clear(status) {
-      context.fillStyle = FILL_STYLE_FOR_STATUS[status] || "rgb(229,229,229)";
-      context.fillRect(0, 0, width, height);
+    clear() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
       return this;
+    },
+    async reset() {
+      return new Promise((resolve) => {
+        context.fillStyle = STYLES.LOST;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        setTimeout(() => resolve(this), 1500);
+      });
     },
   };
 };

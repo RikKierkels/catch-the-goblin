@@ -31,3 +31,7 @@ export const WAVE_STATUS = {
   WON: "won",
   LOST: "lost",
 };
+
+export const STYLES = {
+  LOST: "rgba(205,92,92, 0.5)",
+};

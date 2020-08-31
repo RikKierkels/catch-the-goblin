@@ -1,6 +1,7 @@
-import { INPUT_KEY } from "../utils/constants.js";
+import { ACTOR_STATE, INPUT_KEY, STYLE } from "../utils/constants.js";
 import { FunctionalMixin } from "../utils/utils.js";
 import { Location } from "../utils/location.js";
+import { drawImageOverlay } from "../ui/display.js";
 
 const DIRECTION_KEYS = {
   north: [INPUT_KEY.ARROW_UP, INPUT_KEY.W],
@@ -35,15 +36,32 @@ const getTravelledDistance = (distance, input) => {
 
 const Hero = FunctionalMixin({
   update(time, input) {
+    this.updateStates(time);
+
     const travelledDistance = getTravelledDistance(this.speed * time, input);
     this.moveToInWorld(this.location.plus(travelledDistance));
 
     return this;
   },
   hit() {},
-  draw(context, image) {
+  wound(damage) {
+    if (this.hasState(ACTOR_STATE.HURTING)) return this;
+
+    this.hitpoints -= damage;
+    return this.hitpoints <= 0 ? this.destroy() : this.addState(ACTOR_STATE.HURTING, 1);
+  },
+  draw({ buffer, bufferContext, displayContext, image }) {
     const { x, y } = this.location.get();
-    context.drawImage(image, x, y);
+    displayContext.drawImage(image, x, y);
+
+    if (this.hasState(ACTOR_STATE.HURTING)) {
+      drawImageOverlay(bufferContext, image, STYLE.RED_TRANSPARENT, this.width, this.height);
+      displayContext.drawImage(buffer, x, y);
+    }
+  },
+  destroy() {
+    this.addState(ACTOR_STATE.DEAD, Infinity);
+    return this;
   },
 });
 

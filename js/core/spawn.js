@@ -2,28 +2,28 @@ import ActorFactory from "../actor/actor-factory.js";
 import Timer from "../utils/timer.js";
 
 const Spawn = ({ type, total, interval }) => {
-  let actors = [];
-  let timer = Timer(interval);
+  let actorsToSpawn = [];
+  let spawnTimer = Timer(interval);
 
   return {
-    canSpawnMore: () => total > 0,
+    hasSpawnedAll: () => total <= 0,
     update(time) {
-      if (!this.canSpawnMore()) return this;
-      timer = timer.update(time);
+      if (this.hasSpawnedAll()) return this;
+      spawnTimer = spawnTimer.update(time);
       return this;
     },
     spawn() {
-      if (!this.canSpawnMore() || !timer.hasExpired()) return actors;
+      if (this.hasSpawnedAll() || !spawnTimer.hasExpired()) return actorsToSpawn;
 
       const actor = ActorFactory.create(type);
-      actors = [...actors, actor];
+      actorsToSpawn = [...actorsToSpawn, actor];
       total--;
-      timer = timer.reset();
+      spawnTimer = spawnTimer.reset();
 
-      return actors;
+      return actorsToSpawn;
     },
     clear() {
-      actors = [];
+      actorsToSpawn = [];
       return this;
     },
   };

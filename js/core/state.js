@@ -1,4 +1,4 @@
-import { ACTOR_TYPE, WAVE_STATUS } from "../utils/constants.js";
+import { ACTOR_STATE, ACTOR_TYPE, WAVE_STATUS } from "../utils/constants.js";
 import { isEmpty } from "../utils/utils.js";
 import ActorFactory from "../actor/actor-factory.js";
 
@@ -20,7 +20,7 @@ const State = ({ hero = ActorFactory.create(ACTOR_TYPE.HERO), wave = null } = {}
         hero = actorCollidingWithHero.hit(hero);
       }
 
-      status = hero.isDead ? WAVE_STATUS.LOST : status;
+      status = hero.hasState(ACTOR_STATE.DEAD) ? WAVE_STATUS.LOST : status;
       status = isWaveCleared(wave) ? WAVE_STATUS.WON : status;
 
       return this;

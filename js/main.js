@@ -1,4 +1,4 @@
-import Canvas from "./ui/canvas.js";
+import Display from "./ui/display.js";
 import State from "./core/state.js";
 import ImageCache from "./ui/image-cache.js";
 import { trackInput } from "./core/input.js";
@@ -31,7 +31,7 @@ const runGame = async () => {
   const input = compose(trackInput, Object.values)(INPUT_KEY);
   const imageCache = await ImageCache().loadBatch(Object.values(IMAGE));
 
-  let canvas = Canvas({ imageCache, width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX }).load(document.body);
+  let canvas = Display({ imageCache, width: WORLD_WIDTH_PX, height: WORLD_HEIGHT_PX }).load(document.body);
   let state = State();
 
   for (let wave = 0; wave < WAVES.total(); ) {

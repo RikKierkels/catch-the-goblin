@@ -11,8 +11,14 @@ const Actor = FunctionalMixin({
   hit() {
     required("hit");
   },
+  wound() {
+    required("wound");
+  },
   draw() {
     required("draw");
+  },
+  destroy() {
+    required("destroy");
   },
 });
 

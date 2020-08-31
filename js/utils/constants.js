@@ -27,5 +27,11 @@ export const WAVE_STATUS = {
 };
 
 export const STYLE = {
-  RED_TRANSPARENT: "rgba(205,92,92, 0.5)",
+  RED_TRANSPARENT: "rgba(186, 51, 35, 0.6)",
+};
+
+export const ACTOR_STATE = {
+  ATTACKING: 0,
+  HURTING: 1,
+  DEAD: 2,
 };

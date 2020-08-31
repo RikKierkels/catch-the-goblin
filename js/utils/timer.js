@@ -2,6 +2,7 @@ const Timer = (time) => {
   let elapsedTime = 0;
 
   return {
+    isTicking: () => elapsedTime !== time,
     hasExpired: () => elapsedTime >= time,
     update(time) {
       elapsedTime += time;

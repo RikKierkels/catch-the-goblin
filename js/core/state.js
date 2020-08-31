@@ -20,7 +20,7 @@ const State = ({ hero = ActorFactory.create(ACTOR_TYPE.HERO), wave = null } = {}
         hero = actorCollidingWithHero.hit(hero);
       }
 
-      status = hero.hasState(ACTOR_STATE.DEAD) ? WAVE_STATUS.LOST : status;
+      status = hero.isDead() ? WAVE_STATUS.LOST : status;
       status = isWaveCleared(wave) ? WAVE_STATUS.WON : status;
 
       return this;

@@ -3,20 +3,21 @@ import Actor from "./actor.js";
 import Hero from "./hero.js";
 import Goblin from "./goblin.js";
 import { Location } from "../utils/location.js";
+import { States } from "./states.js";
 import { pipe } from "../utils/fp.js";
 import { ACTOR_TYPE } from "../utils/constants.js";
 import { WORLD_HEIGHT_PX, WORLD_WIDTH_PX } from "../core/world.js";
-import HasStates from "./has-states.js";
 
 const location = Location();
-const createHero = (states) => pipe(Actor, Hero, IsMovableBox, HasStates(states));
+const createHero = pipe(Actor, Hero, IsMovableBox);
 const createGoblin = pipe(Actor, Goblin, IsBox);
 
 const ACTORS = {
   [ACTOR_TYPE.HERO]: (overrides) =>
-    createHero([])({
+    createHero({
       type: ACTOR_TYPE.HERO,
       location: location.center(WORLD_WIDTH_PX, WORLD_HEIGHT_PX),
+      states: States([]),
       width: 32,
       height: 32,
       speed: 256,

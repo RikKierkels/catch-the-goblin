@@ -35,8 +35,14 @@ const getTravelledDistance = (distance, input) => {
 };
 
 const Hero = FunctionalMixin({
+  isDead() {
+    return this.states.has(ACTOR_STATE.DEAD);
+  },
+  isHurting() {
+    return this.states.has(ACTOR_STATE.HURTING);
+  },
   update(time, input) {
-    this.updateStates(time);
+    this.states = this.states.update(time);
 
     const travelledDistance = getTravelledDistance(this.speed * time, input);
     this.moveToInWorld(this.location.plus(travelledDistance));
@@ -45,22 +51,26 @@ const Hero = FunctionalMixin({
   },
   hit() {},
   wound(damage) {
-    if (this.hasState(ACTOR_STATE.HURTING)) return this;
+    if (this.isHurting()) return this;
 
     this.hitpoints -= damage;
-    return this.hitpoints <= 0 ? this.destroy() : this.addState(ACTOR_STATE.HURTING, 1);
+
+    if (this.hitpoints <= 0) return this.destroy();
+
+    this.states = this.states.add(ACTOR_STATE.HURTING, 1);
+    return this;
   },
   draw({ buffer, bufferContext, displayContext, image }) {
     const { x, y } = this.location.get();
     displayContext.drawImage(image, x, y);
 
-    if (this.hasState(ACTOR_STATE.HURTING)) {
+    if (this.isHurting()) {
       drawImageOverlay(bufferContext, image, STYLE.RED_TRANSPARENT, this.width, this.height);
       displayContext.drawImage(buffer, x, y);
     }
   },
   destroy() {
-    this.addState(ACTOR_STATE.DEAD, Infinity);
+    this.states = this.states.add(ACTOR_STATE.DEAD);
     return this;
   },
 });

@@ -5,8 +5,7 @@ const Goblin = FunctionalMixin({
     return this;
   },
   hit(other) {
-    if ("wound" in other) other.wound(this.baseDamage);
-    return other;
+    return other.wound(this.baseDamage);
   },
   draw({ displayContext, image }) {
     const { x, y } = this.location.get();

@@ -1,4 +1,4 @@
-# Game-Functional-Composition
+# Catch the goblin
 
 Simple canvas game to try out a few core concepts of functional composition, patterns are inspired by:
 
